@@ -1,5 +1,5 @@
 # easyroam example service
-This is a simple example of how service work in easyroam and what they can do.
+This is a simple example of how services work in easyroam and what they can do.
 Install the dependencies and set the following environment variables before starting the program:
 
 | Name | Description |

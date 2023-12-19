@@ -8,6 +8,7 @@ import time
 def authenticate():
     global access_token
     r = requests.post(f"{os.getenv('AUTH_URL')}oauth/token", data=creds)
+    print(r.request.headers)
     r_json = r.json()
     if r_json.get("access_token") == None:
         print("Error: " + r_json.get("error"))
@@ -38,12 +39,17 @@ if __name__ == "__main__":
         if cmd == "ls":
             r = requests.get(
                 f"{os.getenv('API_URL')}api/user",
+                json={
+                    "limit":100,
+                    "offset":0
+                },
                 headers={
                     "Authorization": "Bearer " + access_token,
                     "x-api-version": "1.0",
                 },
             )
             if r.status_code == 200:
+                print("Users (max. 100):")
                 for i in r.json().get("data"):
                     print(
                         "User:",
@@ -54,7 +60,7 @@ if __name__ == "__main__":
                         i.get("profileCount"),
                     )
             else:
-                print(r.json().get("error"))
+                print(r.json())
         elif cmd == "exit":
             break
         elif cmd == "show":
